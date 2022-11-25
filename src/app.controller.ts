@@ -3,27 +3,27 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 
 import { AppService } from './app.service';
 import { AccoutDto } from '../dto/account.dto';
 import { TransferDto } from 'dto/transferDetails.dto';
 import { ValidateDto } from 'dto/validate.dto';
-
+import { PinDto } from 'dto/pin.dto';
 @Controller('bank')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get(':id')
-  getAccount(@Param('id') id: number) {
+  @Get('')
+  getAccount(@Query('id') id: string) {
     return this.appService.getAccount(id);
   }
-  @Delete(':id')
-  deleteAccount(@Param('id') id: number) {
-    return this.appService.deleteAccount(id);
+  @Delete('')
+  deleteAccount(@Query('id') id: string, @Body() pin: PinDto) {
+    return this.appService.deleteAccount(id, pin);
   }
   @Post()
   addAccount(@Body() account: AccoutDto) {
